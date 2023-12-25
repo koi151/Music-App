@@ -1,7 +1,9 @@
-doctype html 
-html 
-  head 
-    title Song Title Page 
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
 
-  body
-    h1 Song Title Page 
+block main 
+  .container.my-3
+    .row 
+      .col-12 
+        .box-head 
+          +box-head(pageTitle)
