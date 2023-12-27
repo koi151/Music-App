@@ -1,0 +1,47 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .singer-detail
+    .container.my-3
+      .row
+        .col-12
+          .inner-title #{song.title}
+
+          .inner-actions
+            div(class="inner-action inner-time")
+              <i class="fa-regular fa-clock"></i> 20/10/2023
+            div(class="inner-action inner-singer")
+              <i class="fa-solid fa-microphone-lines"></i> #{singer.fullName}
+            div(class="inner-action inner-topic")
+              <i class="fa-solid fa-music"></i> #{topic.title}
+            div(class="inner-action inner-like" button-like=song.id)
+              <i class="fa-regular fa-thumbs-up"></i>
+              <span>#{song.like} like</span>
+            div(class="inner-action inner-listen")
+              <i class="fa-solid fa-headphones"></i>
+              span #{song.listen} listens
+            div(class=("inner-action inner-heart " + (song.isFavoriteSong ? "active" : "")) button-favorite=song.id)
+              <i class="fa-regular fa-heart"></i> Favourite song
+
+          .inner-play
+            .inner-avatar
+              img(src=song.avatar)
+            .inner-audio
+              //- audio(controls)
+              //-   source(src="https://backend.daca.vn/assets/audios/cat-doi-noi-sau.mp3")
+              div(
+                id="aplayer"
+                song-data=song
+                singer-data=singer
+              )
+
+          .inner-desc
+            .inner-label Description
+            .inner-text
+              | !{song.description}
+
+          .inner-desc
+            .inner-label Lyric
+            .inner-text
+              | !{song.lyrics}

@@ -11,6 +11,11 @@ const songSchema = new mongoose.Schema(
     lyrics: String,
     audio: String,
     status: String,
+    slug: {
+      type: String,
+      slug: "title",
+      unique: true
+    },
     deleted: {
       type: Boolean,
       default: false,
