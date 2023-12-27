@@ -210,7 +210,7 @@
   animation-duration: 12s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  /* animation-play-state: paused; */
+  animation-play-state: paused;
 }
 
 @keyframes spin {

@@ -32,3 +32,31 @@ if (aplayer) {
 }
 
 // End APlayer
+
+// Like button
+const likeButton = document.querySelector("[like-button]");
+if (likeButton) {
+  likeButton.addEventListener('click', () => {
+    const songId = likeButton.getAttribute('like-button');
+    const isActive = likeButton.classList.contains('active');
+    console.log("isActive", isActive)
+
+    const likeType = isActive ? 'dislike' : 'like';
+
+    const option = {
+      method: "PATCH"
+    } 
+
+    fetch(`/songs/like/${likeType}/${songId}`, option)
+      .then(res => res.json())
+      .then(data => {
+        const span = likeButton.querySelector("span");
+        span.innerHTML = `${data.like} like`;
+        likeButton.classList.toggle('active');
+      })
+  })
+}
+
+
+
+// End button

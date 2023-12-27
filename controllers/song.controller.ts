@@ -69,3 +69,33 @@ export const detail = async (req: Request, res: Response) => {
     console.log('Error occurred in [GET] /songs/detail/:slugTopic:', error);
   }
 }
+
+// [PATCH] /songs/like/:type/:songId
+export const like = async (req: Request, res: Response) => {
+  try {
+    const songId: string = req.params.songId;
+    const likeType = req.params.type;
+
+    const selectedSong = await Song.findOne({
+      _id: songId,
+      status: 'active',
+      deleted: false
+    })
+
+    const updatedLike: number = likeType == 'like' ? selectedSong.like + 1 : selectedSong.like - 1;
+
+    await Song.updateOne(
+      { _id: songId },
+      { like: updatedLike }
+    )
+
+    res.json({
+      code: 200,
+      message: 'Success',
+      like: updatedLike
+    })
+
+  } catch (error) {
+    console.log('Error occurred in [GET] /songs/detail/:slugTopic:', error);
+  }
+}
