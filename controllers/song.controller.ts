@@ -3,6 +3,7 @@ import { Request, Response } from "express"
 import Topic from '../models/topic.model';
 import Song from '../models/song.model';
 import Singer from '../models/singer.model';
+import FavoriteSong from '../models/favorite-songs.model';
 
 // [GET] /songs/:slugTopic
 export const topics = async (req: Request, res: Response) => {
@@ -58,6 +59,12 @@ export const detail = async (req: Request, res: Response) => {
       deleted: false
     }).select('title')
 
+    const favoriteSong = await FavoriteSong.findOne({
+      songId: song.id
+    })
+
+    song['favoriteSong'] = favoriteSong ? true : false;
+
     res.render('client/pages/songs/detail.pug', {
       pageTitle: 'Song Detail',
       song: song,
@@ -74,7 +81,7 @@ export const detail = async (req: Request, res: Response) => {
 export const like = async (req: Request, res: Response) => {
   try {
     const songId: string = req.params.songId;
-    const likeType = req.params.type;
+    const likeType: string = req.params.type;
 
     const selectedSong = await Song.findOne({
       _id: songId,
@@ -96,6 +103,59 @@ export const like = async (req: Request, res: Response) => {
     })
 
   } catch (error) {
-    console.log('Error occurred in [GET] /songs/detail/:slugTopic:', error);
+    console.log('Error occurred in [GET] /songs/like/:type/:songId', error);
+  }
+}
+
+
+// [PATCH] /songs/like/:favoriteType/:songId
+export const favorite = async (req: Request, res: Response) => {
+  try {
+    const songId: string = req.params.songId;
+    const favoriteType: string = req.params.favoriteType;
+
+    switch (favoriteType) {
+      case 'favorite':
+        const existedFavoriteSong = await FavoriteSong.findOne({
+          songId: songId
+        })
+
+        if (!existedFavoriteSong) {
+          const newFavoriteSong = new FavoriteSong({
+            songId: songId
+          }) 
+          await newFavoriteSong.save();
+
+        }
+        break;
+
+      case 'unfavorite':
+        await FavoriteSong.deleteOne({
+          songId: songId
+        })
+        break;
+
+      default:
+        break;
+    }
+
+    // await Song.updateOne(
+    //   { _id: songId },
+    //   { like: updatedLike }
+    // )
+
+    // res.json({
+    //   code: 200,
+    //   message: 'Success',
+    //   like: updatedLike
+    // })
+
+    res.json({
+      code: 200,
+      message: 'Success'
+    })
+
+  } catch (error) {
+    console.log('Error occurred in [GET] /songs/like/:favoriteType/:songId', error);
   }
 }

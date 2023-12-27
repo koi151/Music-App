@@ -21,8 +21,8 @@ block main
             div(class="inner-action inner-listen")
               <i class="fa-solid fa-headphones"></i>
               span #{song.listen} listens
-            div(class=("inner-action inner-heart " + (song.isFavoriteSong ? "active" : "")) button-favorite=song.id)
-              <i class="fa-regular fa-heart"></i> Favourite song
+            div(class=("inner-action inner-heart " + (song.favoriteSong ? "active" : '')) favorite-button=song.id)
+              <i class="fa-regular fa-heart"></i> Favorite song
 
           .inner-play
             .inner-avatar

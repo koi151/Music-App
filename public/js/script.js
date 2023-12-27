@@ -39,7 +39,6 @@ if (likeButton) {
   likeButton.addEventListener('click', () => {
     const songId = likeButton.getAttribute('like-button');
     const isActive = likeButton.classList.contains('active');
-    console.log("isActive", isActive)
 
     const likeType = isActive ? 'dislike' : 'like';
 
@@ -50,9 +49,41 @@ if (likeButton) {
     fetch(`/songs/like/${likeType}/${songId}`, option)
       .then(res => res.json())
       .then(data => {
-        const span = likeButton.querySelector("span");
-        span.innerHTML = `${data.like} like`;
-        likeButton.classList.toggle('active');
+        if (data.code == 200) {
+          const span = likeButton.querySelector("span");
+          span.innerHTML = `${data.like} like`;
+          likeButton.classList.toggle('active');
+        }
+      })
+  })
+}
+
+// End like button
+
+
+// Favorite button
+const favoriteButton = document.querySelector("[favorite-button]");
+console.log("favoriteButton", favoriteButton)
+if (favoriteButton) {
+  console.group('add click')
+  favoriteButton.addEventListener('click', () => {
+    console.log('clicked')
+    const songId = favoriteButton.getAttribute('favorite-button');
+    const isActive = favoriteButton.classList.contains('active');
+
+    const favoriteType = isActive ? 'unfavorite' : 'favorite';
+
+    const option = {
+      method: "PATCH"
+    } 
+
+    fetch(`/songs/favorite/${favoriteType}/${songId}`, option)
+      .then(res => res.json())
+      .then(data => {
+        if (data.code == 200) {
+          favoriteButton.classList.toggle('active');
+        }
+        // span.innerHTML = `${data.like} `;
       })
   })
 }
@@ -60,3 +91,4 @@ if (likeButton) {
 
 
 // End button
+
