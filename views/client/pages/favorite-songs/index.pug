@@ -1,0 +1,23 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head(pageTitle)
+
+    .row
+      each item in favoriteSongs
+        .col-6.mb-3
+          div(class="song-item")
+            div(class="inner-image")
+              a(href=`/songs/detail/${item.songInfo.slug}`)
+                img(src=item.songInfo.avatar)
+            div(class="inner-content")
+              div(class="inner-title")
+                a(href=`/songs/detail/${item.songInfo.slug}`) #{item.songInfo.title}
+              div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.singerInfo.fullName}
+              div(class="inner-heart active" favorite-button=item.songInfo.id)
+                <i class="fa-regular fa-heart"></i> Yêu thích
+              div(class="inner-time") <i class="fa-regular fa-clock"></i> 20/10/2023
