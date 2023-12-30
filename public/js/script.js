@@ -78,7 +78,7 @@ if (favoriteButtonList.length > 0) {
       fetch(`/songs/favorite/${favoriteType}/${songId}`, option)
         .then(res => res.json())
         .then(data => {
-          if (data.code == 200) {
+          if (data && data.code == 200) {
             favoriteButton.classList.toggle('active');
           }
         })
@@ -86,7 +86,48 @@ if (favoriteButtonList.length > 0) {
   })
 }
 
+// End favorite button
 
+// Searching suggest
 
-// End button
+const boxSearch = document.querySelector('.box-search');
+if (boxSearch) {
+  const input = boxSearch.querySelector("input[name='keyword']");
+  const innerSuggest  = boxSearch.querySelector('.inner-suggest');
+
+  input.addEventListener('keyup', () => {
+    const keyword = input.value;
+
+    fetch(`/search/suggest?keyword=${keyword}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.code == 200) {
+          const songs = data.songs;
+          if (songs.length > 0) {
+            const htmls = songs.map(song => (
+              `<a class="inner-item" href="/songs/detail/${song.slug}">
+                <div class="inner-image">
+                  <img src="${song.avatar}" />
+                </div>
+                <div class="inner-info">
+                    <div class="inner-title">${song.title}</div>
+                    <div class="inner-singer">
+                      <i class="fa-solid fa-microphone-lines"></i> ${song.singerInfo.fullName}
+                    </div>
+                </div>
+              </a>`
+            ))
+            
+            const innerList = document.querySelector('.inner-list');
+            innerList.innerHTML = htmls.join('');
+            innerSuggest.classList.add("show");
+
+          } else {
+            innerSuggest.classList.remove('show');
+          }
+        }
+      })
+  })
+}
+// End searching suggest
 

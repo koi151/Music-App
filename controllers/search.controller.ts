@@ -5,38 +5,74 @@ import Singer from '../models/singer.model';
 
 import { convertToSlug } from '../helpers/convertToSlug';
 
-// [GET] /search/result/
+// [GET] /search/:type
 export const result = async (req: Request, res: Response) => {
   try {
-    const keyword: string = `${req.query.keyword}`
+    const searchType = req.params.type;
+    const keyword: string = `${req.query.keyword}`;
 
-    const unidecodeSlug = convertToSlug(keyword);
-    const slugRegex: RegExp = new RegExp(unidecodeSlug, "i");
+    let newSongs = [];
 
-    const songs = await Song.find({
-      $or: [
-        { title: keyword },
-        { slug: slugRegex }
-      ],
-      deleted: false
-    })
+    if(keyword) {
+      const unidecodeSlug = convertToSlug(keyword);
+      const slugRegex: RegExp = new RegExp(unidecodeSlug, "i");
 
-    for (const song of songs) {
-      const singerInfo = await Singer.findOne({
-        _id: song.singerId,
-        deleted: false,
-      }).select('fullName avatar')
+      const songs = await Song.find({
+        $or: [
+          { title: keyword },
+          { slug: slugRegex }
+        ]
+      });
 
-      song['singerInfo'] = singerInfo;
+      if (songs.length > 0) {
+        for (const song of songs) {
+          const singerInfo = await Singer.findOne({
+            _id: song.singerId,
+            deleted: false,
+          })
+  
+          // song['singerInfo'] = singerInfo;
+          newSongs.push({
+            id: song.id,
+            title: song.title,
+            avatar: song.avatar,
+            slug: song.slug,
+            like: song.like,
+            singerInfo: {
+              fullName: singerInfo.fullName
+            }
+          });
+        }
+      }      
     }
 
-    res.render('client/pages/search/result', {
-      pageTitle: `Search result for ${keyword}`,
-      songs: songs
-    });
+    switch (searchType) {
+      case "result":
+        res.render('client/pages/search/result', {
+          pageTitle: `Search result for ${keyword}`,
+          keyword: keyword,
+          songs: newSongs
+        });
+        break;  
+
+      case "suggest":
+        res.json({
+          code: 200,
+          message: "Suggest successful",
+          songs: newSongs
+        })
+        break;
+      
+      default:
+        res.json({
+          code: 400,
+          message: "Error"
+        });
+        break;
+    }
 
   } catch (error) {
-    console.log('Error occurred in [GET] /search/result/ :', error);
+    console.log('Error occurred in [GET] /search/:type :', error);
     res.json({
       code: 400,
       message: "Not existed"
