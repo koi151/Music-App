@@ -32,7 +32,7 @@ export const index = async (req: Request, res: Response) => {
 
   } catch (error) {
     console.log('Error occured in [GET] /favorite-song:', error);
-    res.json({
+    res.status(400).json({
       code: 400,
       message: 'Not existed'
     })

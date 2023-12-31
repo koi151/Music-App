@@ -96,7 +96,7 @@ export const like = async (req: Request, res: Response) => {
       { like: updatedLike }
     )
 
-    res.json({
+    res.status(200).json({
       code: 200,
       message: 'Success',
       like: updatedLike
@@ -150,7 +150,7 @@ export const favorite = async (req: Request, res: Response) => {
     //   like: updatedLike
     // })
 
-    res.json({
+    res.status(200).json({
       code: 200,
       message: 'Success'
     })
@@ -181,7 +181,7 @@ export const listen = async (req: Request, res: Response) => {
       _id: songId
     });
 
-    res.json({
+    res.status(200).json({
       code: 200,
       message: 'Success',
       listen: newSongData.listen

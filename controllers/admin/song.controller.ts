@@ -19,7 +19,7 @@ export const index = async (req: Request, res: Response) => {
 
   } catch (error) {
     console.log('Error occurred in [GET] /admin/songs:', error);
-    res.json({
+    res.status(400).json({
       code: 400,
       message: "Not existed"
     })
@@ -45,7 +45,7 @@ export const create = async (req: Request, res: Response) => {
 
   } catch (error) {
     console.log('Error occurred in [GET] /admin/songs:', error);
-    res.json({
+    res.status(400).json({
       code: 400,
       message: "Not existed"
     })
@@ -72,7 +72,7 @@ export const createPost = async (req: Request, res: Response) => {
     
   } catch (error) {
     console.log('Error occurred in [POST] /admin/songs/create:', error);
-    res.json({
+    res.status(400).json({
       code: 400,
       message: "Error occurred"
     })
