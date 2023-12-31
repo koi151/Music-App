@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import FavoriteSong from '../models/favorite-songs.model';
-import Song from '../models/song.model';
-import Singer from '../models/singer.model';
+import FavoriteSong from '../../models/favorite-songs.model';
+import Song from '../../models/song.model';
+import Singer from '../../models/singer.model';
 
 // [GET] /favorite-song
 export const index = async (req: Request, res: Response) => {

@@ -23,6 +23,7 @@
     "mongoose": "^8.0.3",
     "mongoose-slug-updater": "^3.3.0",
     "pug": "^3.0.2",
+    "tinymce": "^6.8.2",
     "unidecode": "^0.1.8"
   },
   "devDependencies": {

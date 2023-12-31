@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router: Router = Router();
 
-import * as controller from '../../controllers/search.controller';
+import * as controller from '../../controllers/client/search.controller';
 
 router.get('/:type', controller.result);
 

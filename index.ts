@@ -1,8 +1,11 @@
 import express, { Express } from 'express';
 import dotenv from "dotenv"; 
 import * as database from './config/database';
+import path from 'path';
+import { systemConfig } from './config/system';
 
 import clientRoutes from './routes/client/index.route';
+import adminRoutes from './routes/admin/index.route';
 
 dotenv.config();
 
@@ -16,6 +19,18 @@ app.use(express.static(`${__dirname}/public`));
 
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
+
+// TinyMCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+
+// App local variables
+app.locals.adminPrefix = systemConfig.adminPrefix;
+
+// Admin routes
+adminRoutes(app);
 
 // Client routes
 clientRoutes(app);
