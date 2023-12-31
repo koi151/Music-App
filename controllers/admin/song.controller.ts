@@ -53,9 +53,21 @@ export const create = async (req: Request, res: Response) => {
 }
 
 // [POST] /admin/songs/create
+
+interface SongData {
+  title: string;
+  avatar: string;
+  description: string;
+  singerId: string;
+  topicId: string;
+  lyrics: string;
+  status: string;
+}
+
 export const createPost = async (req: Request, res: Response) => {
   try {
-    const songData = {
+    // using object improve the security of data - user cannot add extra field
+    const songData: SongData = {
       title: req.body.title,
       avatar: req.body.avatar,
       description: req.body.description,
@@ -63,9 +75,10 @@ export const createPost = async (req: Request, res: Response) => {
       topicId: req.body.topicId,
       lyrics: req.body.lyric,
       status: req.body.status,
-    }
+    };
 
     const newSong = new Song(songData);
+
     await newSong.save();
 
     res.redirect(`/${systemConfig.adminPrefix}/songs`);
