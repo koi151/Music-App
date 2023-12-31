@@ -86,7 +86,7 @@ export const createPost = async (req: Request, res: Response) => {
       description: req.body.description,
       singerId: req.body.singerId,
       topicId: req.body.topicId,
-      lyrics: req.body.lyric,
+      lyrics: req.body.lyrics,
       status: req.body.status,
     };
 

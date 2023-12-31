@@ -10,13 +10,18 @@ if (aplayer) {
 
   const ap = new APlayer({
     container: aplayer,
-    audio: [{
+    lrcType: 1,
+    audio: [
+      {
         name: songData.title,
         artist: singerData.fullName,
         url: songData.audio,
-        cover: songData.avatar
-    }],
-    autoplay: true
+        cover: songData.avatar,
+        lrc: songData.lyrics
+      },
+    ],
+    autoplay: true,
+    volume: 0.8
   });
 
   const avatar = document.querySelector('.inner-play .inner-avatar');

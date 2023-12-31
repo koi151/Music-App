@@ -17,6 +17,7 @@ router.get('/create', controller.create);
 
 router.post(
   "/create",
+  validate.createPost, // !
   upload.fields(
     [
       { name: 'avatar', maxCount: 1 },
