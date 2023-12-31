@@ -18,11 +18,15 @@
   },
   "homepage": "https://github.com/koi151/Music-App#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "cloudinary": "^1.41.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "mongoose": "^8.0.3",
     "mongoose-slug-updater": "^3.3.0",
+    "multer": "^1.4.5-lts.1",
     "pug": "^3.0.2",
+    "streamifier": "^0.1.1",
     "tinymce": "^6.8.2",
     "unidecode": "^0.1.8"
   },
