@@ -29,6 +29,21 @@ if (aplayer) {
     avatar.style.animationPlayState = 'paused';
   });
 
+  ap.on('ended', function () {
+    const option = {
+      method: "PATCH"
+    } 
+
+    fetch(`/songs/listen/${songData._id}`, option)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.code == 200) {
+          const elementListensSpan = document.querySelector('.singer-detail .inner-listen span');
+          elementListensSpan.innerHTML = `${data.listen} listens`
+        }
+      })
+  })
+
 }
 
 // End APlayer
@@ -89,7 +104,6 @@ if (favoriteButtonList.length > 0) {
 // End favorite button
 
 // Searching suggest
-
 const boxSearch = document.querySelector('.box-search');
 if (boxSearch) {
   const input = boxSearch.querySelector("input[name='keyword']");

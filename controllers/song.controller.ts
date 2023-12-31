@@ -159,3 +159,35 @@ export const favorite = async (req: Request, res: Response) => {
     console.log('Error occurred in [GET] /songs/like/:favoriteType/:songId', error);
   }
 }
+
+// [PATCH] /songs/listen/:songId
+export const listen = async (req: Request, res: Response) => {
+  try {
+    const songId: string = req.params.songId;
+
+    const song = await Song.findOne({
+      _id: songId,
+      deleted: false
+    });
+
+    const newListens: number = song.listen + 1;
+
+    await Song.updateOne(
+      { _id: songId },
+      { listen: newListens }
+    )
+
+    const newSongData = await Song.findOne({
+      _id: songId
+    });
+
+    res.json({
+      code: 200,
+      message: 'Success',
+      listen: newSongData.listen
+    })
+
+  } catch (error) {
+    console.log('Error occurred in [GET] /songs/like/:favoriteType/:songId', error);
+  }
+}

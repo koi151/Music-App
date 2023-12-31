@@ -15,6 +15,9 @@ block main
               <i class="fa-solid fa-microphone-lines"></i> #{singer.fullName}
             div(class="inner-action inner-topic")
               <i class="fa-solid fa-music"></i> #{topic.title}
+            div(class="inner-action inner-listen")
+              <i class="fa-solid fa-headphones"></i>
+              span #{song.listen} listens
             div(class="inner-action inner-like" like-button=song.id)
               <i class="fa-regular fa-thumbs-up"></i>
               <span>#{song.like} like</span>
