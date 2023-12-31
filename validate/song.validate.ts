@@ -1,25 +1,3 @@
-// import { Request, Response, NextFunction } from "express";
-
-// export const createPost = async (req: Request, res: Response, next: NextFunction) => {
-//   if (!req.body.title) {
-//     res.json({
-//       code: 400,
-//       message: "Title is required"
-//     });
-//     return;
-//   }
-
-//   if (!req.body.singerId) {
-//     res.json({
-//       code: 400,
-//       message: "Singer is required"
-//     });
-//     return;
-//   }
-
-//   next();
-// }
-
 import { Request, Response, NextFunction } from "express";
 
 const validateRequiredFields = (fields: { [key: string]: string | number | undefined }, res: Response) => {

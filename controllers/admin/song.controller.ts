@@ -57,6 +57,7 @@ export const create = async (req: Request, res: Response) => {
 interface SongData {
   title: string;
   avatar: string;
+  audio: string;
   description: string;
   singerId: string;
   topicId: string;
@@ -66,10 +67,22 @@ interface SongData {
 
 export const createPost = async (req: Request, res: Response) => {
   try {
+    let avatar = "";
+    let audio = "";
+
+    if (req.body.avatar) {
+      avatar = req.body.avatar[0];
+    }
+
+    if(req.body.audio) {
+      audio = req.body.audio[0];
+    }
+
     // using object improve the security of data - user cannot add extra field
     const songData: SongData = {
       title: req.body.title,
-      avatar: req.body.avatar,
+      avatar: avatar,
+      audio: audio,
       description: req.body.description,
       singerId: req.body.singerId,
       topicId: req.body.topicId,
