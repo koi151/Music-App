@@ -1,0 +1,123 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") #{pageTitle}
+
+  form(
+      action=`/${adminPrefix}/songs/edit/${song.id}?_method=PATCH`
+      method="POST"
+      enctype="multipart/form-data"
+    )
+      div(class="form-group")
+        label(for="title") Title
+        input(
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          required
+          value=song.title
+        )
+      div(class="form-group")
+        label(for="topic") Topic
+        select(
+          name="topicId"
+          id="topic"
+          class="form-control"
+          required
+        )
+          option(value="" disabled) -- Choose topic --
+          each item in topics
+            option(
+              value=item.id
+              selected=(item.id == song.topicId ? true : false)
+            ) #{item.title}
+      div(class="form-group")
+        label(for="singer") Singer
+        select(
+          name="singerId"
+          id="singer"
+          class="form-control"
+          required
+        )
+          option(value="" disabled) -- Choose singer --
+          each item in singers
+            option(
+              value=item.id
+              selected=(item.id == song.singerId ? true : false)
+            ) #{item.fullName}
+      div(
+        class="form-group"
+        upload-image
+      )
+        label(for="avatar") Image
+        input(
+          type="file"
+          class="form-control-file"
+          id="avatar"
+          name="avatar"
+          accept="image/*"
+          upload-image-input
+        )
+        img(
+          src=song.avatar
+          class="image-preview"
+          upload-image-preview
+        )
+      div(
+        class="form-group"
+        upload-audio
+      )
+        label(for="audio") Audio file
+        input(
+          type="file"
+          class="form-control-file"
+          id="audio"
+          name="audio"
+          accept="audio/*"
+          upload-audio-input
+        )
+        audio(controls upload-audio-play)
+          source(src=song.audio)
+      div(class="form-group")
+        label(for="lyrics") Lyrics
+        textarea(
+          class="form-control"
+          id="lyrics"
+          name="lyrics"
+          rows="20"
+        ) #{song.lyrics}
+      div(class="form-group")
+        label(for="desc") Description
+        textarea(
+          class="form-control"
+          id="desc"
+          name="description"
+          rows="5"
+          textarea-mce
+        ) #{song.description}
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked=(song.status == "active" ? true : false)
+        )
+        label(for="statusActive" class="form-check-label") Active
+      div(class="form-group form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInActive"
+          name="status"
+          value="inactive"
+          checked=(song.status == "inactive" ? true : false)
+        )
+        label(for="statusInActive" class="form-check-label") Inactive
+      div(class="form-group")
+        button(
+          type="submit"
+          class="btn btn-primary"
+        ) Update
