@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import * as database from './config/database';
 import path from 'path';
 import { systemConfig } from './config/system';
+import methodOverride from 'method-override'
 
 import clientRoutes from './routes/client/index.route';
 import adminRoutes from './routes/admin/index.route';
@@ -15,7 +16,10 @@ const app: Express = express();
 const port: number | string = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+// app.use(express.urlencoded({ extended: true }))
+
+// for using PATCH
+app.use(methodOverride('_method'))
 
 app.use(express.static(`${__dirname}/public`));
 

@@ -1,28 +1,31 @@
-import { Request, Response, NextFunction } from "express";
+// import { Request, Response, NextFunction } from "express";
 
-const validateRequiredFields = (fields: { [key: string]: string | number | undefined }, res: Response) => {
-  for (const key in fields) {
-    if (!fields[key]) {
-      res.status(400).json({
-        code: 400,
-        message: `${key} is required`
-      });
-      return false;
-    }
-  }
-  return true;
-};
+// // Define an interface that extends the 'Request' object to include the 'body' property
+// interface RequestWithBody extends Request {
+//   body: {
+//     title: string;
+//     avatar: string;
+//     audio: string;
+//     description: string;
+//     singerId: string;
+//     topicId: string;
+//     lyrics: string;
+//     status: string;
+//   };
+// }
 
-export const createPost = async (req: Request, res: Response, next: NextFunction) => {
-  const requiredFields = {
-    title: req.body.title,
-    singerId: req.body.singerId,
-    topicId: req.body.topicId
-  };
+// export const createPost = async (req: RequestWithBody, res: Response, next: NextFunction): Promise<void> => {
+//   const requiredFields = ["title", "singerId", "topicId"];
 
-  if (!validateRequiredFields(requiredFields, res)) {
-    return;
-  }
+//   for (const field of requiredFields) {
+//     if (!req.body[field]) {
+//       res.json({
+//         code: 400,
+//         message: `${field.charAt(0).toUpperCase() + field.slice(1)} is required`,
+//       });
+//       return;
+//     }
+//   }
 
-  next();
-};
+//   next();
+// };
