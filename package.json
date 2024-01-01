@@ -6,8 +6,15 @@
   "scripts": {
     "start": "nodemon index.ts",
     "build": "tsc && node copy-dir.js",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koi151/Music-App.git"
@@ -37,6 +44,7 @@
     "@types/node": "^20.10.5",
     "fs-extra": "^11.2.0",
     "nodemon": "^3.0.2",
+    "pre-commit": "^1.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
