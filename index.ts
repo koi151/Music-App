@@ -28,7 +28,7 @@ app.set("view engine", "pug");
 
 // TinyMCE
 app.use(
-  "/tinymce",
+  '/tinymce',
   express.static(path.join(__dirname, "node_modules", "tinymce"))
 );
 
